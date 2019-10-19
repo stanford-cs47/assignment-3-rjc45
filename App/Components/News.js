@@ -9,15 +9,15 @@
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
-import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking } from 'react-native'
-import { material } from 'react-native-typography' //consider using this!
+import { StyleSheet, SafeAreaView, View, FlatList, Text, TouchableOpacity, Linking, Button} from 'react-native'
+import { material, robotoWeights } from 'react-native-typography' //consider using this!
 import { Metrics, Colors } from '../Themes'
 
 export default class News extends Component {
   static defaultProps = { articles: [] }
 
   static propTypes = {
-    articles: PropTypes.array
+    article: PropTypes.array
   }
 
   //you can change the props above to whatever you want/need.
@@ -27,7 +27,18 @@ export default class News extends Component {
 
     return (
       <View style={styles.container}>
-        {/*Some FlatList or SectionList*/}
+        <FlatList 
+            data={articles}
+            renderItem={({ item }) => (
+                <View style={[styles.article]}>
+                  <Text style={[styles.header]}>{item.title}</Text>
+                  <Text style={[styles.snippet]}>{item.snippet}</Text>
+                  <Text style={[styles.byline]}>{item.byline}</Text>
+                  <Text style={[styles.date]}>{item.date}</Text>
+                </View>
+            )}
+            keyExtractor={item => item.title}
+          />
       </View>
     );
   }
@@ -36,6 +47,22 @@ export default class News extends Component {
 
 const styles = StyleSheet.create({
   container: {
-
+    
+  },
+  article: {
+    margin: 22,
+  },
+  header: {
+    fontSize: 24,
+  },
+  snippet: {
+    fontSize: 12,
+  },
+  byline: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  date: {
+    fontSize: 10,
   },
 });
